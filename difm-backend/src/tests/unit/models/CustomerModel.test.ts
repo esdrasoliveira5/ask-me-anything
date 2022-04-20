@@ -1,13 +1,11 @@
 import * as sinon from 'sinon';
 import chai from 'chai';
-import chaiHttp = require('chai-http');
+import CustomerModel from '../../../models/CustomerModel';
 
-const costumer = new CostumerModel();
-
-chai.use(chaiHttp);
+const customer = new CustomerModel();
 const { expect } = chai;
 
-describe('3 - Test CostumerModel', () => {
+describe('3 - Test customerModel', () => {
   describe('3.1 - method create', () => {
     describe('if success', () => {
       const payload = {
@@ -29,7 +27,7 @@ describe('3 - Test CostumerModel', () => {
       }
       before(async () => {
         sinon
-          .stub(costumer.model, 'create')
+          .stub(customer.model, 'create')
           .resolves(payload);
       });
     
@@ -38,7 +36,7 @@ describe('3 - Test CostumerModel', () => {
       })
     
       it('return the user created in the db', async () => {
-        const response = await costumer.create({
+        const response = await customer.create({
           name: 'Roberto',
           lastName: 'Oliveira',
           email: 'roberto@email.com',
