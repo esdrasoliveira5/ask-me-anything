@@ -12,4 +12,6 @@ export enum MessageErrors {
   INTERNAL = 'Internal Server Error',
   NOT_FOUND = 'Object not found',
   BAD_REQUEST = 'Bad request',
+  INVALID_TOKEN = 'Invalid token',
+  INVALID_PASSWORD = 'Invalid password',
 }
