@@ -85,7 +85,7 @@ describe('2 - Test customerServices', () => {
           },
         })
   
-        expect(response).to.be.deep.equal({ status: 500, response: { message: 'Internal Server Error'} });
+        expect(response).to.be.deep.equal({ status: 500, response: { error: 'Internal Server Error'} });
       });
     });
   });
