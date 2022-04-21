@@ -16,8 +16,8 @@ class CustomerService extends Service<Customer> {
     const response = await this.model.create({ ...obj, hires: [] });
     if (response === undefined) {
       return {
-        status: 500,
-        response: { error: 'Internal Server Error' },
+        status: this.status.INTERNAL,
+        response: { error: this.errors.INTERNAL },
       };
     }
     return { status: 201, response };
