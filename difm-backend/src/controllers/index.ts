@@ -8,7 +8,7 @@ abstract class Controller<T> {
 
   constructor(public service: Service<T>) {}
 
-  abstract create(req: RequestWithBody<T>, res: Response<T | Error>):
+  abstract create(req: RequestWithBody<T>, res: Response):
   Promise<typeof res>;
 }
 
