@@ -5,6 +5,7 @@ export enum StatusCodes {
   BAD_REQUEST = 400,
   UNAUTHORIZED,
   NOT_FOUND = 404,
+  CONFLICT = 409,
   INVALID = 422,
   INTERNAL = 500,
 }
@@ -14,4 +15,5 @@ export enum MessageErrors {
   BAD_REQUEST = 'Bad request',
   INVALID_TOKEN = 'Invalid token',
   INVALID_PASSWORD = 'Invalid password',
+  CONFLICT = 'Conflict',
 }

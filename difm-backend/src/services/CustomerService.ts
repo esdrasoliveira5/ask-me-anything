@@ -15,11 +15,16 @@ class CustomerService extends Service<Customer> {
   create = async (obj:Customer):
   Promise<ResponseCreate<Customer> | ResponseError> => {
     const validation = this.validation.customerValidations(obj);
-
     if (validation) return validation;
     
+    const customer = await this.model.readOne(obj);
+    if (customer) {
+      return {
+        status: this.status.CONFLICT, response: { error: this.errors.CONFLICT },
+      };
+    }
+
     const hash = await this.bcrypt.hashIt(obj.password);
-    
     const response = await this.model.create({ ...obj, password: hash });
     if (response === undefined) {
       return {
