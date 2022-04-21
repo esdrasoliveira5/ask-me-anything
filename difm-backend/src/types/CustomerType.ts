@@ -3,7 +3,7 @@ import { User } from './UserType';
 import { WorkerSchema } from './WorkerType';
 
 const CustomerSchema = z.object({
-  hires: z.array(WorkerSchema),
+  hires: z.array(WorkerSchema).optional(),
 });
 
 export type Customer = User & z.infer<typeof CustomerSchema>;

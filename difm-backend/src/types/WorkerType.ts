@@ -12,7 +12,7 @@ const WorkerSchema = z.object({
     invalid_type_error: 'price must be a number',
   }).min(1, { message: 'price cannot be less than 1' })
     .or(z.literal('a combinar')),
-  customers: z.array(UserSchema),
+  customers: z.array(UserSchema).optional(),
 });
 
 export type Worker = User & z.infer<typeof WorkerSchema>;

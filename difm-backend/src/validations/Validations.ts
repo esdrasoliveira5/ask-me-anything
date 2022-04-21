@@ -32,7 +32,7 @@ class Validations {
     }
   };
 
-  motorcycleValidations = (obj: Worker): void | ResponseError => {
+  workerValidations = (obj: Worker): void | ResponseError => {
     const userError = this.userValidations(obj);
     if (userError) return userError;
 
