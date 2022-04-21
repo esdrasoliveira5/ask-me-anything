@@ -84,8 +84,27 @@ describe('3 - Test customerServices', () => {
             state: 'estado'
           },
         })
-  
         expect(response).to.be.deep.equal({ status: 500, response: { error: 'Internal Server Error'} });
+      });
+
+      it('return an object with status 400 and an error message "name is required"', async () => {
+        const response = await customer.create({
+          name: '',
+          lastName: 'Oliveira',
+          email: 'roberto@email.com',
+          contact: '11987654321',
+          password: '123456789',
+          type: 'customer',
+          address: {
+            street: 'avenida',
+            number: '100A',
+            district: 'Bairro',
+            zipcode: '45687-899',
+            city: 'cidade',
+            state: 'estado'
+          },
+        })
+        expect(response).to.be.deep.equal({ status: 400, response: { error: 'name is required'} });
       });
     });
   });

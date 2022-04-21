@@ -14,33 +14,33 @@ const { expect } = chai;
 
 describe('1 - Test endpoint POST /customer', () => {
   describe('1.1 - if success', () => {
-    it('a) return status 201 and the user created', async () => {
-      let chaiHttpResponse: Response;
-      const customerPayload: Customer = {
-        name: 'Roberto',
-        lastName: 'Oliveira',
-        email: 'roberto@email.com',
-        contact: '11987654321',
-        password: '123456789',
-        type: 'customer',
-        hires: [],
-        address: {
-          street: 'avenida',
-          number: '100A',
-          district: 'Bairro',
-          zipcode: '45687-899',
-          city: 'cidade',
-          state: 'estado'
-        }
+    let chaiHttpResponse: Response;
+    const customerPayload: Customer = {
+      name: 'Roberto',
+      lastName: 'Oliveira',
+      email: 'roberto@email.com',
+      contact: '11987654321',
+      password: '123456789',
+      type: 'customer',
+      hires: [],
+      address: {
+        street: 'avenida',
+        number: '100A',
+        district: 'Bairro',
+        zipcode: '45687-899',
+        city: 'cidade',
+        state: 'estado'
       }
-      before(() => {
-        sinon
-        .stub(customer.model, 'create')
-        .resolves(customerPayload);
-      });
-      after(()=>{
-        sinon.restore();
-      });
+    }
+    before(() => {
+      sinon
+      .stub(customer.model, 'create')
+      .resolves(customerPayload);
+    });
+    after(()=>{
+      sinon.restore();
+    });
+    it('a) return status 201 and the user created', async () => {
       chaiHttpResponse = await chai
          .request(server.app)
          .post('/customer')
@@ -81,17 +81,18 @@ describe('1 - Test endpoint POST /customer', () => {
       });
     });
   });
-  describe('1.1 - if fail', () => {
+  describe('1.2 - if fail', () => {
+    let chaiHttpResponse: Response;
+    before(() => {
+      sinon
+      .stub(customer.model, 'create')
+      .resolves(undefined);
+    });
+    after(()=>{
+      sinon.restore();
+    });
+
     it('a) return status 500 and the error message "Internal Server Error"', async () => {
-      let chaiHttpResponse: Response;
-      before(() => {
-        sinon
-        .stub(customer.model, 'create')
-        .resolves(undefined);
-      });
-      after(()=>{
-        sinon.restore();
-      });
       chaiHttpResponse = await chai
          .request(server.app)
          .post('/customer')
@@ -115,8 +116,8 @@ describe('1 - Test endpoint POST /customer', () => {
       expect(chaiHttpResponse).to.have.status(500);
       expect(chaiHttpResponse.body).to.deep.equal({ "error": "Internal Server Error"});
     });
+
     it('b) return status 400 and the error message "name is required "', async () => {
-      let chaiHttpResponse: Response;
       chaiHttpResponse = await chai
          .request(server.app)
          .post('/customer')
