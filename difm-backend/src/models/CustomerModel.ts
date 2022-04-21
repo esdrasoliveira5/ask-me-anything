@@ -1,5 +1,5 @@
 import { Schema, model as createModel, Document } from 'mongoose';
-import { Customer } from '../interfaces/CustomerType';
+import { Customer } from '../types/CustomerType';
 import MongoModel from './MongoModel';
 
 interface CustomerDocument extends Customer, Document {}

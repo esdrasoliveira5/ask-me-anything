@@ -1,12 +1,12 @@
 import { ZodError } from 'zod';
 
-export type Status = {
+export interface Status {
   status: number;
-};
+}
 
-export type Error = {
+export interface Error {
   error: ZodError | string;
-};
+}
 
 export interface ResponseError extends Status {
   response: Error

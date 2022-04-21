@@ -1,6 +1,6 @@
 import { Response } from 'express';
 import Controller from '.';
-import { Customer } from '../interfaces/CustomerType';
+import { Customer } from '../types/CustomerType';
 import { RequestWithBody } from '../interfaces/RequestWithBodyI';
 import { Error } from '../interfaces/ResponsesInterface';
 import CustomerService from '../services/CustomerService';

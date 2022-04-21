@@ -1,5 +1,5 @@
 import Service from '.';
-import { Customer } from '../interfaces/CustomerType';
+import { Customer } from '../types/CustomerType';
 import {
   ResponseCreate,
   ResponseError,

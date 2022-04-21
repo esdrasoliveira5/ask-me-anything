@@ -3,7 +3,7 @@ import chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import { Response } from 'superagent';
-import { Customer } from '../../interfaces/CustomerType';
+import { Customer } from '../../types/CustomerType';
 import CustomerModel from '../../models/CustomerModel';
 import server from '../../server';
 const customer = new CustomerModel();
