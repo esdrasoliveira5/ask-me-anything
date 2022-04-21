@@ -22,8 +22,8 @@ const UserSchema = z.object({
     required_error: 'password is required',
     invalid_type_error: 'password must be a string',
   }),
-  type: z.literal('jobber')
-    .or(z.literal('customer')),
+  type: z.string(z.literal('jobber')
+    .or(z.literal('customer'))),
   address: AddressSchema,
 });
 

@@ -11,7 +11,7 @@ class CustomerService extends Service<Customer> {
     super(model);
   }
 
-  create = async (obj:Customer):
+  create = async (obj:Omit<Customer, 'hires'>):
   Promise<ResponseCreate<Customer> | ResponseError> => {
     const response = await this.model.create({ ...obj, hires: [] });
     if (response === undefined) {
