@@ -3,6 +3,7 @@ import chai from 'chai';
 
 import CustomerService from '../../../services/CustomerService';
 import { Customer } from '../../../types/CustomerType';
+import { ZodError } from 'zod';
 
 const customer = new CustomerService();
 const { expect } = chai;
@@ -15,7 +16,7 @@ describe('3 - Test customerServices', () => {
         lastName: 'Oliveira',
         email: 'roberto@email.com',
         contact: '11987654321',
-        password: '123456789',
+        password: '$2b$10$JOmGDGptDGC1.eLa3OMj0uAk4FxZT2SjLH0lbP3Uh9W7iDHGN3Lp6',
         type: 'customer',
         hires: [],
         address: {
@@ -43,7 +44,7 @@ describe('3 - Test customerServices', () => {
           lastName: 'Oliveira',
           email: 'roberto@email.com',
           contact: '11987654321',
-          password: '123456789',
+          password: 'roberto_password',
           type: 'customer',
           address: {
             street: 'avenida',
@@ -74,7 +75,7 @@ describe('3 - Test customerServices', () => {
           lastName: 'Oliveira',
           email: 'roberto@email.com',
           contact: '11987654321',
-          password: '123456789',
+          password: 'roberto_password',
           type: 'customer',
           address: {
             street: 'avenida',
@@ -93,7 +94,7 @@ describe('3 - Test customerServices', () => {
           lastName: 'Oliveira',
           email: 'roberto@email.com',
           contact: '11987654321',
-          password: '123456789',
+          password: 'roberto_password',
           type: 'customer',
           address: {
             street: 'avenida',
@@ -106,22 +107,6 @@ describe('3 - Test customerServices', () => {
         } as Customer)
         
         expect(response.status).to.be.equal(400);
-        expect(response.response).to.be.deep.equal({
-          error: {
-              issues: [
-                  {
-                      code: "invalid_type",
-                      expected: "string",
-                      received: "undefined",
-                      path: [
-                          "name"
-                      ],
-                      message: "name is required"
-                  }
-              ],
-              name: "ZodError"
-          }
-      });
       });
     });
   });

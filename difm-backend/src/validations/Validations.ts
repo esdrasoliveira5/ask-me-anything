@@ -11,7 +11,7 @@ class Validations {
 
   userValidations = (obj: Customer | Worker): void | ResponseError => {
     const parsedUser = UserSchema.safeParse(obj);
-    if (!parsedUser.success) {
+    if (!parsedUser.success) {      
       return {
         status: this.status.BAD_REQUEST,
         response: { error: parsedUser.error },

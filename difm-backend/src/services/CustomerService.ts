@@ -14,9 +14,12 @@ class CustomerService extends Service<Customer> {
   create = async (obj:Customer):
   Promise<ResponseCreate<Customer> | ResponseError> => {
     const validation = this.validation.customerValidations(obj);
+
     if (validation) return validation;
     
-    const response = await this.model.create(obj);
+    const hash = await this.bcrypt.hashIt(obj.password);
+    
+    const response = await this.model.create({ ...obj, password: hash });
     if (response === undefined) {
       return {
         status: this.status.INTERNAL,
