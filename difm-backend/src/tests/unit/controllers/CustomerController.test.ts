@@ -66,20 +66,20 @@ describe('1 - Test CustomerController', () => {
         
         expect((response.status as sinon.SinonStub).calledWith(201))
         expect((response.json as sinon.SinonStub).calledWith({
-          "name": 'Roberto',
-          "lastName": 'Oliveira',
-          "email": 'roberto@email.com',
-          "contact": '11987654321',
-          "password": '123456789',
-          "type": 'customer',
+          "name": "Roberto",
+          "lastName": "Oliveira",
+          "email": "roberto@email.com",
+          "contact": "11987654321",
+          "password": "123456789",
+          "type": "customer",
           "hires": [],
           "address": {
-            "street": 'avenida',
-            "number": '100A',
-            "district": 'Bairro',
-            "zipcode": '45687-899',
-            "city": 'cidade',
-            "state": 'estado'
+            "street": "avenida",
+            "number": "100A",
+            "district": "Bairro",
+            "zipcode": "45687-899",
+            "city": "cidade",
+            "state": "estado"
           }
         }))
       });
