@@ -1,7 +1,7 @@
 import App from './app';
 import CustomRouter from './routes/routes';
 import CustomerController from './controllers/CustomerController';
-import { Customer } from './interfaces/CustomerType';
+import { Customer } from './types/CustomerType';
 
 const server = new App();
 const customerController = new CustomerController();

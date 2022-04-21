@@ -2,6 +2,7 @@ import * as sinon from 'sinon';
 import chai from 'chai';
 
 import CustomerService from '../../../services/CustomerService';
+import { Customer } from '../../../types/CustomerType';
 
 const customer = new CustomerService();
 const { expect } = chai;
@@ -89,7 +90,6 @@ describe('3 - Test customerServices', () => {
 
       it('return an object with status 400 and an error message "name is required"', async () => {
         const response = await customer.create({
-          name: '',
           lastName: 'Oliveira',
           email: 'roberto@email.com',
           contact: '11987654321',
@@ -103,8 +103,25 @@ describe('3 - Test customerServices', () => {
             city: 'cidade',
             state: 'estado'
           },
-        })
-        expect(response).to.be.deep.equal({ status: 400, response: { error: 'name is required'} });
+        } as Customer)
+        
+        expect(response.status).to.be.equal(400);
+        expect(response.response).to.be.deep.equal({
+          error: {
+              issues: [
+                  {
+                      code: "invalid_type",
+                      expected: "string",
+                      received: "undefined",
+                      path: [
+                          "name"
+                      ],
+                      message: "name is required"
+                  }
+              ],
+              name: "ZodError"
+          }
+      });
       });
     });
   });
