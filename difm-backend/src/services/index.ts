@@ -3,6 +3,7 @@ import { Model } from '../interfaces/ModelInterface';
 import {
   ResponseError,
   ResponseCreate,
+  ResponseRead,
 } from '../interfaces/ResponsesInterface';
 import Bcrypt from '../validations/Bcrypt';
 import JwToken from '../validations/JwtToken';
@@ -22,6 +23,8 @@ abstract class Service<T> {
   constructor(public model: Model<T>) {}
 
   abstract create(obj: T): Promise<ResponseCreate<T> | ResponseError>;
+
+  abstract read(): Promise<ResponseRead<T> | ResponseError>;
 }
 
 export default Service;

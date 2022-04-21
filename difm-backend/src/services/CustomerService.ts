@@ -3,6 +3,7 @@ import { Customer } from '../types/CustomerType';
 import {
   ResponseCreate,
   ResponseError,
+  ResponseRead,
 } from '../interfaces/ResponsesInterface';
 import CustomerModel from '../models/CustomerModel';
 
@@ -27,6 +28,17 @@ class CustomerService extends Service<Customer> {
       };
     }
     return { status: this.status.CREATED, response };
+  };
+
+  read = async (): Promise<ResponseRead<Customer> | ResponseError> => {
+    const response = await this.model.read();
+    if (response === undefined) {
+      return {
+        status: this.status.INTERNAL,
+        response: { error: this.errors.INTERNAL },
+      };
+    }
+    return { status: this.status.OK, response };
   };
 }
 

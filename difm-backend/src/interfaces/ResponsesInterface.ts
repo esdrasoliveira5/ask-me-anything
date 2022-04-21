@@ -15,3 +15,7 @@ export interface ResponseError extends Status {
 export interface ResponseCreate<T> extends Status {
   response: T;
 }
+
+export interface ResponseRead<T> extends Status {
+  response: T[];
+}
