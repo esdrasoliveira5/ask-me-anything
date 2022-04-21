@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import * as sinon from 'sinon';
 import chai from 'chai';
-
+import CustomerController from '../../../controllers/CustomerController';
 
 const { expect } = chai;
 const customer = new CustomerController();
