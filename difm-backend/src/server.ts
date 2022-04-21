@@ -1,25 +1,12 @@
 import App from './app';
-
-// import CustomRouter from './routes/Router';
-
-// import CarController from './controllers/CarController';
-// import MotorcycleController from './controllers/MotorcycleController';
-
-// import { Car } from './interfaces/CarInterface';
-// import { Motorcycle } from './interfaces/MotorcycleInterface';
+import CustomRouter from './routes/routes';
+import CustomerController from './controllers/CustomerController';
+import { Customer } from './interfaces/CustomerType';
 
 const server = new App();
-
-// const carController = new CarController();
-// const motorcycleController = new MotorcycleController();
-
-// const carRouter = new CustomRouter<Car>();
-// const motorcycleRouter = new CustomRouter<Motorcycle>();
-
-// carRouter.addRoute(carController);
-// motorcycleRouter.addRoute(motorcycleController);
-
-// server.addRouter(carRouter.router);
-// server.addRouter(motorcycleRouter.router);
+const customerController = new CustomerController();
+const customerRouter = new CustomRouter<Customer>();
+customerRouter.addRoute(customerController);
+server.addRouter(customerRouter.router);
 
 export default server;
