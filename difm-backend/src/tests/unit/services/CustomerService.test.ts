@@ -3,7 +3,6 @@ import chai from 'chai';
 
 import CustomerService from '../../../services/CustomerService';
 import { Customer } from '../../../types/CustomerType';
-import { ZodError } from 'zod';
 
 const customer = new CustomerService();
 const { expect } = chai;
