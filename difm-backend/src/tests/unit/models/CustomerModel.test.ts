@@ -130,7 +130,7 @@ describe('2 - Test customerModel', () => {
     describe('b) if fail', () => {
       before(async () => {
         sinon
-          .stub(customer.model, 'create')
+          .stub(customer.model, 'find')
           .resolves(undefined);
       });
     
