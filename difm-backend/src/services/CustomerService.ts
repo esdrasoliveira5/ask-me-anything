@@ -20,7 +20,7 @@ class CustomerService extends Service<Customer> {
         response: { error: this.errors.INTERNAL },
       };
     }
-    return { status: 201, response };
+    return { status: this.status.CREATED, response };
   };
 }
 
