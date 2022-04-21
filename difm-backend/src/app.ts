@@ -1,11 +1,13 @@
 import express, { Router } from 'express';
 import connectToDatabase from './connection';
-// import HanldeError from './middlewares/handleError';
+import HanldeError from './middlewares/handleError';
+
+require('express-async-errors');
 
 class App {
   public app: express.Application;
 
-  // public handleError = new HanldeError();
+  public handleError = new HanldeError();
 
   constructor() {
     this.app = express();
@@ -22,7 +24,7 @@ class App {
 
   public addRouter(router: Router) {
     this.app.use(router);
-    // this.app.use(this.handleError.genericError);
+    this.app.use(this.handleError.genericError);
   }
 
   public getApp() {

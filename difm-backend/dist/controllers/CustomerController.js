@@ -19,7 +19,6 @@ class CustomerController extends _1.default {
         super(service);
         this.create = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { body } = req;
-            console.log('AQUiU');
             const { status, response } = yield this.service.create(body);
             return res.status(status).json(response);
         });
