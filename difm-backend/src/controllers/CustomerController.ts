@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import Controller from '.';
 import { Customer } from '../types/CustomerType';
 import { RequestWithBody } from '../interfaces/RequestWithBodyI';
@@ -25,6 +25,15 @@ class CustomerController extends Controller<Customer> {
     const { body } = req;
     
     const { status, response } = await this.service.create(body);
+
+    return res.status(status).json(response);
+  };
+
+  read = async (
+    _req: Request,
+    res: Response<Customer[] | Error>,
+  ): Promise<typeof res> => {
+    const { status, response } = await this.service.read();
 
     return res.status(status).json(response);
   };

@@ -64,7 +64,7 @@ describe('1 - Test CustomerController', () => {
       it('return the status 201 and the user created', async () => {
         await customer.create(request, response);
         
-        expect((response.status as sinon.SinonStub).calledWith(201))
+        expect((response.status as sinon.SinonStub).calledWith(201)).to.be.equal(true);
         expect((response.json as sinon.SinonStub).calledWith({
           "name": "Roberto",
           "lastName": "Oliveira",
@@ -81,7 +81,7 @@ describe('1 - Test CustomerController', () => {
             "city": "cidade",
             "state": "estado"
           }
-        }))
+        })).to.be.equal(true);
       });
     });
     describe('b) if fails', () => {
@@ -124,10 +124,10 @@ describe('1 - Test CustomerController', () => {
       it('return the status 500 and error message "Internal Server Error"', async () => {
         await customer.create(request, response);
          
-        expect((response.status as sinon.SinonStub).calledWith(500));
+        expect((response.status as sinon.SinonStub).calledWith(500)).to.be.equal(true);;
         expect((response.json as sinon.SinonStub).calledWith({
           error: "Internal Server Error",
-        }))
+        })).to.be.equal(true);
       });
     });
   });
@@ -173,7 +173,7 @@ describe('1 - Test CustomerController', () => {
       it('return the status 200 and the user read', async () => {
         await customer.read(request, response);
         
-        expect((response.status as sinon.SinonStub).calledWith(200))
+        expect((response.status as sinon.SinonStub).calledWith(200)).to.be.equal(true);
         expect((response.json as sinon.SinonStub).calledWith([
           {
             name: 'Roberto',
@@ -192,7 +192,7 @@ describe('1 - Test CustomerController', () => {
               state: 'estado'
             }
           }
-        ]))
+        ])).to.be.equal(true);
       });
     });
     describe('b) if fails', () => {
@@ -204,7 +204,7 @@ describe('1 - Test CustomerController', () => {
       }
     
       before(async () => {
-
+        request.body = {};
         response.status = sinon.stub().returns(response)
         response.json = sinon.stub()
         
@@ -218,12 +218,12 @@ describe('1 - Test CustomerController', () => {
       });
     
       it('return the status 500 and error message "Internal Server Error"', async () => {
-        await customer.create(request, response);
-         
-        expect((response.status as sinon.SinonStub).calledWith(500));
+        await customer.read(request, response);
+        
+        expect((response.status as sinon.SinonStub).calledWith(500)).to.be.equal(true);
         expect((response.json as sinon.SinonStub).calledWith({
           error: "Internal Server Error",
-        }))
+        })).to.be.equal(true);
       });
     });
   });
