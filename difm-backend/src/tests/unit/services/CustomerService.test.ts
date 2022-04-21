@@ -6,8 +6,8 @@ import CustomerService from '../../../services/CustomerService';
 const customer = new CustomerService();
 const { expect } = chai;
 
-describe('2 - Test customerServices', () => {
-  describe('2.1 - method create', () => {
+describe('3 - Test customerServices', () => {
+  describe('3.1 - method create', () => {
     describe('a) if success', () => {
       const payload = {
         name: 'Roberto',

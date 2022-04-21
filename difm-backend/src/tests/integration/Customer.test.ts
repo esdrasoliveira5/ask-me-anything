@@ -1,15 +1,18 @@
 import * as sinon from 'sinon';
 import chai from 'chai';
 import chaiHttp = require('chai-http');
-import App from '../../app';
+
+import App  from '../../app';
+export const { app } = new App();
+
 import { Response } from 'superagent';
 import { Customer } from '../../interfaces/CustomerType';
 import CustomerModel from '../../models/CustomerModel';
-
 const customer = new CustomerModel();
-const app = new App();
-const { expect } = chai;
+
 chai.use(chaiHttp);
+
+const { expect } = chai;
 
 describe('1 - Test endpoint POST /customer', () => {
   describe('1.1 - if success', () => {
@@ -47,7 +50,7 @@ describe('1 - Test endpoint POST /customer', () => {
          .post('/customer')
          .set('X-API-Key', 'foobar')
          .send(customerPayload)
-                  
+      
       expect(chaiHttpResponse).to.have.status(201);
       expect(chaiHttpResponse.body).to.deep.equal(customerPayload);
     });

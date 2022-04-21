@@ -8,9 +8,9 @@ const customer = new CustomerController();
 const request = {} as Request;
 const response = {} as Response;
 
-describe('3 - Test CustomerController', () => {
-  describe('3.1 - method create', () => {
-    describe('if success', () => {
+describe('1 - Test CustomerController', () => {
+  describe('1.1 - method create', () => {
+    describe('a) if success', () => {
       const payload = {
         status: 201,
         response: {
@@ -84,7 +84,7 @@ describe('3 - Test CustomerController', () => {
         }))
       });
     });
-    describe('if fails', () => {
+    describe('b) if fails', () => {
       const payload = {
         status: 400,
         response: {

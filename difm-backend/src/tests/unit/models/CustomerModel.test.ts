@@ -5,8 +5,8 @@ import CustomerModel from '../../../models/CustomerModel';
 const customer = new CustomerModel();
 const { expect } = chai;
 
-describe('1 - Test customerModel', () => {
-  describe('1.1 - method create', () => {
+describe('2 - Test customerModel', () => {
+  describe('2.1 - method create', () => {
     describe('a) if success', () => {
       const payload = {
         name: 'Roberto',
