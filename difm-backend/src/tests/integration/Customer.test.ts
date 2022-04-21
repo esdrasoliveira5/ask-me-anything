@@ -2,12 +2,10 @@ import * as sinon from 'sinon';
 import chai from 'chai';
 import chaiHttp = require('chai-http');
 
-import App  from '../../app';
-export const { app } = new App();
-
 import { Response } from 'superagent';
 import { Customer } from '../../interfaces/CustomerType';
 import CustomerModel from '../../models/CustomerModel';
+import server from '../../server';
 const customer = new CustomerModel();
 
 chai.use(chaiHttp);
@@ -46,13 +44,82 @@ describe('1 - Test endpoint POST /customer', () => {
 
     it('A) return status 201 and the user created', async () => {
       chaiHttpResponse = await chai
-         .request(app)
+         .request(server.app)
          .post('/customer')
          .set('X-API-Key', 'foobar')
-         .send(customerPayload)
+         .send({
+          "name": "Roberto",
+          "lastName": "Oliveira",
+          "email": "roberto@email.com",
+          "contact": "11987654321",
+          "password": "123456789",
+          "type": "customer",
+          "address": {
+              "street": "avenida",
+              "number": "100A",
+              "district": "Bairro",
+              "zipcode": "45687-899",
+              "city": "cidade",
+              "state": "estado"
+          }
+      });
       
       expect(chaiHttpResponse).to.have.status(201);
-      expect(chaiHttpResponse.body).to.deep.equal(customerPayload);
+      expect(chaiHttpResponse.body).to.deep.equal({
+        "name": "Roberto",
+        "lastName": "Oliveira",
+        "email": "roberto@email.com",
+        "contact": "11987654321",
+        "password": "123456789",
+        "type": "customer",
+        "hires": [],
+        "address": {
+            "street": "avenida",
+            "number": "100A",
+            "district": "Bairro",
+            "zipcode": "45687-899",
+            "city": "cidade",
+            "state": "estado"
+        }
+      });
+    });
+  });
+  describe('1.1 - if fail', () => {
+    let chaiHttpResponse: Response;
+
+    before(() => {
+      sinon
+      .stub(customer.model, 'create')
+      .resolves(undefined);
+    });
+    after(()=>{
+      sinon.restore();
+    });
+
+    it('A) return status 500 and the error message "Internal Server Error"', async () => {
+      chaiHttpResponse = await chai
+         .request(server.app)
+         .post('/customer')
+         .set('X-API-Key', 'foobar')
+         .send({
+          "name": "Roberto",
+          "lastName": "Oliveira",
+          "email": "roberto@email.com",
+          "contact": "11987654321",
+          "password": "123456789",
+          "type": "customer",
+          "address": {
+              "street": "avenida",
+              "number": "100A",
+              "district": "Bairro",
+              "zipcode": "45687-899",
+              "city": "cidade",
+              "state": "estado"
+          }
+      });
+      
+      expect(chaiHttpResponse).to.have.status(500);
+      expect(chaiHttpResponse.body).to.deep.equal({ "error": "Internal Server Error"});
     });
   });
 });
