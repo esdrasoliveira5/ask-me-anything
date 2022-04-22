@@ -191,4 +191,96 @@ describe('3 - Test customerServices', () => {
       });
     });
   });
+  describe('3.3 - method update', () => {
+    describe('a) if success', () => {
+      before(async () => {
+        sinon
+          .stub(customer.model, 'update')
+          .resolves(payload);
+      });
+    
+      after(()=>{
+        sinon.restore();
+      })
+    
+      it('return a array with status 200 and the customer updated in the db', async () => {
+        const response = await customer.update('token', '6260bca97c58e5a0b7847cfa', payload);
+
+        expect(response).to.be.deep.equal({ status: 200, response: payload });
+      });
+    });
+    describe('b) if fail', () => {
+      before(async () => {
+        sinon
+          .stub(customer.model, 'readOne')
+          .resolves(null);
+          sinon
+          .stub(customer.model, 'update')
+          .resolves(payload);
+      });
+    
+      after(()=>{
+        sinon.restore();
+      });
+    
+      it('return an object with status 404 and an error message "Not Found"', async () => {
+        const response = await customer.update('token', '6260bca97c58e5a0b7847cfb', {
+          address: {
+            street: 'avenida',
+            number: '100A',
+            district: 'Bairro',
+            zipcode: '45687-899',
+            city: 'cidade',
+            state: 'estado'
+          },
+        });
+
+        expect(response).to.be.deep.equal({ status: 404, response: { error: 'Not Found'} });
+      });
+    });
+    describe('c) if some of the data is wrong', () => {
+      before(async () => {
+        sinon
+          .stub(customer.model, 'readOne')
+          .resolves(payload);
+          sinon
+          .stub(customer.model, 'update')
+          .resolves(payload);
+      });
+    
+      after(()=>{
+        sinon.restore();
+      });
+
+      it('return an object with status 401 and an error message "Invalid Token"', async () => {
+        const response = await customer.update('token', '6260bca97c58e5a0b7847cfb', {
+          address: {
+            street: 'avenida',
+            number: '100A',
+            district: 'Bairro',
+            zipcode: '45687-899',
+            city: 'cidade',
+            state: 'estado'
+          },
+        });
+
+        expect(response).to.be.deep.equal({ status: 401, response: { error: 'Invalid Token'} });
+      });
+
+      it('return an object with status 400 and an error message "street is required"', async () => {
+        const response = await customer.update('token', '6260bca97c58e5a0b7847cfb', {
+          address: {
+            street: '',
+            number: '100A',
+            district: 'Bairro',
+            zipcode: '45687-899',
+            city: 'cidade',
+            state: 'estado'
+          },
+        } as Customer)
+        
+        expect(response.status).to.be.equal(400);
+      });
+    })
+  });
 });
