@@ -34,6 +34,9 @@ describe('1 - Test endpoint POST /customer', () => {
     }
     before(() => {
       sinon
+      .stub(customer.model, 'findOne')
+      .resolves(null);
+      sinon
       .stub(customer.model, 'create')
       .resolves(customerPayload);
     });
@@ -84,6 +87,9 @@ describe('1 - Test endpoint POST /customer', () => {
   describe('1.2 - if fail', () => {
     let chaiHttpResponse: Response;
     before(() => {
+      sinon
+      .stub(customer.model, 'findOne')
+      .resolves(null);
       sinon
       .stub(customer.model, 'create')
       .resolves(undefined);
@@ -138,7 +144,6 @@ describe('1 - Test endpoint POST /customer', () => {
           }
       });
       expect(chaiHttpResponse).to.have.status(400);
-      expect(chaiHttpResponse.body).to.deep.equal({ "error": "name is required"});
     });
   });
 });

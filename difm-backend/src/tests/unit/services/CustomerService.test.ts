@@ -7,6 +7,24 @@ import { Customer } from '../../../types/CustomerType';
 const customer = new CustomerService();
 const { expect } = chai;
 
+const payload = {
+  name: 'Roberto',
+  lastName: 'Oliveira',
+  email: 'roberto@email.com',
+  contact: '11987654321',
+  password: '$2b$10$JOmGDGptDGC1.eLa3OMj0uAk4FxZT2SjLH0lbP3Uh9W7iDHGN3Lp6',
+  type: 'customer',
+  hires: [],
+  address: {
+    street: 'avenida',
+    number: '100A',
+    district: 'Bairro',
+    zipcode: '45687-899',
+    city: 'cidade',
+    state: 'estado'
+  }
+};
+
 describe('3 - Test customerServices', () => {
   describe('3.1 - method create', () => {
     describe('a) if success', () => {
@@ -26,8 +44,11 @@ describe('3 - Test customerServices', () => {
           city: 'cidade',
           state: 'estado'
         }
-      }
+      };
       before(async () => {
+        sinon
+        .stub(customer.model, 'readOne')
+        .resolves(null);
         sinon
           .stub(customer.model, 'create')
           .resolves(payload);
@@ -37,7 +58,7 @@ describe('3 - Test customerServices', () => {
         sinon.restore();
       })
     
-      it('a.1) return a object with status 201 and the customer created in the db', async () => {
+      it('return a object with status 201 and the customer created in the db', async () => {
         const response = await customer.create({
           name: 'Roberto',
           lastName: 'Oliveira',
@@ -58,37 +79,20 @@ describe('3 - Test customerServices', () => {
       });
     });
     describe('b) if fail', () => {
-      before(async () => {
+      before(() => {
+        sinon
+        .stub(customer.model, 'readOne')
+        .resolves(payload);
         sinon
           .stub(customer.model, 'create')
           .resolves(undefined);
       });
-    
+
       after(()=>{
         sinon.restore();
-      })
-    
-      it('b.1) return an object with status 500 and an error message "Internal Server Error"', async () => {
-        const response = await customer.create({
-          name: 'Roberto',
-          lastName: 'Oliveira',
-          email: 'roberto@email.com',
-          contact: '11987654321',
-          password: 'roberto_password',
-          type: 'customer',
-          address: {
-            street: 'avenida',
-            number: '100A',
-            district: 'Bairro',
-            zipcode: '45687-899',
-            city: 'cidade',
-            state: 'estado'
-          },
-        })
-        expect(response).to.be.deep.equal({ status: 500, response: { error: 'Internal Server Error'} });
       });
 
-      it('b.2) return an object with status 400 and an error message "name is required"', async () => {
+      it('return an object with status 400 and an error message "name is required"', async () => {
         const response = await customer.create({
           lastName: 'Oliveira',
           email: 'roberto@email.com',
@@ -106,6 +110,26 @@ describe('3 - Test customerServices', () => {
         } as Customer)
         
         expect(response.status).to.be.equal(400);
+      });
+
+      it('return an object with status 409 and an error message "Conflict"', async () => {
+        const response = await customer.create({
+          name: 'Roberto',
+          lastName: 'Oliveira',
+          email: 'roberto@email.com',
+          contact: '11987654321',
+          password: 'roberto_password',
+          type: 'customer',
+          address: {
+            street: 'avenida',
+            number: '100A',
+            district: 'Bairro',
+            zipcode: '45687-899',
+            city: 'cidade',
+            state: 'estado'
+          },
+        } as Customer)
+        expect(response).to.be.deep.equal({ status: 409, response: { error: 'Conflict'} });
       });
     });
   });
