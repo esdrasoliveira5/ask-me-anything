@@ -47,9 +47,9 @@ class CustomerService extends Service<Customer> {
     return { status: this.status.OK, response };
   };
 
-  readOne = async (obj: Customer):
+  readOne = async (id: string):
   Promise<ResponseError | ResponseReadOne<Customer>> => {
-    const response = await this.model.readOne(obj);
+    const response = await this.model.readOne({ _id: id });
     if (response === null) {
       return {
         status: this.status.NOT_FOUND,

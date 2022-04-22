@@ -27,7 +27,7 @@ abstract class Service<T> {
 
   abstract read(): Promise<ResponseRead<T> | ResponseError>;
 
-  abstract readOne(obj: T): Promise<ResponseReadOne<T> | ResponseError>;
+  abstract readOne(id: string): Promise<ResponseReadOne<T> | ResponseError>;
 }
 
 export default Service;

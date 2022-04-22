@@ -1,7 +1,10 @@
 import { Request, Response } from 'express';
 import Controller from '.';
 import { Customer } from '../types/CustomerType';
-import { RequestWithBody } from '../interfaces/RequestWithBodyI';
+import {
+  RequestWithBody,
+  RequestWithParams,
+} from '../interfaces/RequestWithBodyI';
 import { Error } from '../interfaces/ResponsesInterface';
 import CustomerService from '../services/CustomerService';
 
@@ -34,6 +37,17 @@ class CustomerController extends Controller<Customer> {
     res: Response<Customer[] | Error>,
   ): Promise<typeof res> => {
     const { status, response } = await this.service.read();
+
+    return res.status(status).json(response);
+  };
+
+  readOne = async (
+    req: RequestWithParams,
+    res: Response<Customer | Error>,
+  ): Promise<typeof res> => {
+    const { id } = req.params;
+
+    const { status, response } = await this.service.readOne(id);
 
     return res.status(status).json(response);
   };

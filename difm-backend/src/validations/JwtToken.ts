@@ -3,11 +3,7 @@ import * as path from 'path';
 import fs = require('fs');
 import { MessageErrors, StatusCodes } from '../enums';
 import { ResponseError } from '../interfaces/ResponsesInterface';
-
-export type TokenType = {
-  id: string;
-  email: string;
-};
+import { TokenType } from '../types';
 
 class JwToken {
   private secret: string;
