@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import {
   RequestWithBody,
   RequestWithParams,
-} from '../interfaces/RequestWithBodyI';
+} from '../interfaces/RequestsInterface';
 
 import Service from '../services';
 

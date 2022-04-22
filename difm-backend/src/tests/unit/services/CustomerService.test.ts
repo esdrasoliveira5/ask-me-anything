@@ -168,7 +168,7 @@ describe('3 - Test customerServices', () => {
       })
     
       it('return a array with status 200 and the customers in the db', async () => {
-        const response = await customer.readOne({_id: '6260bca97c58e5a0b7847cfa'});
+        const response = await customer.readOne('6260bca97c58e5a0b7847cfa');
 
         expect(response).to.be.deep.equal({ status: 200, response: payload });
       });
@@ -185,7 +185,7 @@ describe('3 - Test customerServices', () => {
       })
     
       it('return an object with status 404 and an error message "Not Found"', async () => {
-        const response = await customer.readOne({_id: '6260bca97c58e5a0b7847cfa'});
+        const response = await customer.readOne('6260bca97c58e5a0b7847cfa');
 
         expect(response).to.be.deep.equal({ status: 404, response: { error: 'Not Found'} });
       });

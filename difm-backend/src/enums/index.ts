@@ -11,9 +11,9 @@ export enum StatusCodes {
 }
 export enum MessageErrors {
   INTERNAL = 'Internal Server Error',
-  NOT_FOUND = 'Object not found',
-  BAD_REQUEST = 'Bad request',
-  INVALID_TOKEN = 'Invalid token',
-  INVALID_PASSWORD = 'Invalid password',
+  NOT_FOUND = 'Not Found',
+  BAD_REQUEST = 'Bad Request',
+  INVALID_TOKEN = 'Invalid Token',
+  INVALID_PASSWORD = 'Invalid Password',
   CONFLICT = 'Conflict',
 }
