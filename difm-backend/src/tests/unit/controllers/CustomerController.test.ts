@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import * as sinon from 'sinon';
 import chai from 'chai';
 import CustomerController from '../../../controllers/CustomerController';
+import { RequestWithParams } from '../../../interfaces/RequestsInterface';
 
 const { expect } = chai;
 const customer = new CustomerController();
@@ -103,7 +104,7 @@ describe('1 - Test CustomerController', () => {
     })
   
     it('return the status 200 and the customer ', async () => {
-      await customer.readOne(request, response);
+      await customer.readOne(request as RequestWithParams, response);
       
       expect((response.status as sinon.SinonStub).calledWith(200)).to.be.equal(true);
       expect((response.json as sinon.SinonStub).calledWith(payload)).to.be.equal(true);

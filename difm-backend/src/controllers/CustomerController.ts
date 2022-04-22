@@ -4,7 +4,7 @@ import { Customer } from '../types/CustomerType';
 import {
   RequestWithBody,
   RequestWithParams,
-} from '../interfaces/RequestWithBodyI';
+} from '../interfaces/RequestsInterface';
 import { Error } from '../interfaces/ResponsesInterface';
 import CustomerService from '../services/CustomerService';
 
