@@ -90,10 +90,8 @@ describe('1 - Test endpoint POST /customer', () => {
     before(() => {
       sinon
       .stub(customer.model, 'findOne')
-      .resolves(null);
+      .rejects({ message: 'Internal Server Error'});
       sinon
-      .stub(customer.model, 'create')
-      .resolves(undefined);
     });
     after(()=>{
       sinon.restore();
@@ -121,30 +119,7 @@ describe('1 - Test endpoint POST /customer', () => {
           }
       });
       expect(chaiHttpResponse).to.have.status(500);
-      expect(chaiHttpResponse.body).to.deep.equal({ "error": "Internal Server Error"});
-    });
-
-    it('b) return status 400 and the error message "name is required "', async () => {
-      chaiHttpResponse = await chai
-         .request(server.app)
-         .post('/customer')
-         .set('X-API-Key', 'foobar')
-         .send({
-          "lastName": "Oliveira",
-          "email": "roberto@email.com",
-          "contact": "11987654321",
-          "password": "123456789",
-          "type": "customer",
-          "address": {
-              "street": "avenida",
-              "number": "100A",
-              "district": "Bairro",
-              "zipcode": "45687-899",
-              "city": "cidade",
-              "state": "estado"
-          }
-      });
-      expect(chaiHttpResponse).to.have.status(400);
+      expect(chaiHttpResponse.body).to.deep.equal({ "error": "Erro: Internal Server Error"});
     });
   });
 });
@@ -214,7 +189,7 @@ describe('2 - Test endpoint GET /customer', () => {
     before(() => {
       sinon
       .stub(customer.model, 'find')
-      .resolves(undefined);
+      .rejects({ message: 'Internal Server Error'});
     });
     after(()=>{
       sinon.restore();
@@ -227,7 +202,7 @@ describe('2 - Test endpoint GET /customer', () => {
          .set('X-API-Key', 'foobar')
 
       expect(chaiHttpResponse).to.have.status(500);
-      expect(chaiHttpResponse.body).to.deep.equal({ "error": "Internal Server Error"});
+      expect(chaiHttpResponse.body).to.deep.equal({ "error": "Erro: Internal Server Error"});
     });
   });
 });
@@ -297,7 +272,7 @@ describe('3 - Test endpoint GET /customer/:id', () => {
     before(() => {
       sinon
       .stub(customer.model, 'findOne')
-      .resolves(null);
+      .rejects({ message: 'Internal Server Error'});
     });
     after(()=>{
       sinon.restore();
@@ -310,7 +285,7 @@ describe('3 - Test endpoint GET /customer/:id', () => {
          .set('X-API-Key', 'foobar')
 
       expect(chaiHttpResponse).to.have.status(500);
-      expect(chaiHttpResponse.body).to.deep.equal({ "error": "Internal Server Error"});
+      expect(chaiHttpResponse.body).to.deep.equal({ "error": "Erro: Internal Server Error"});
     });
   });
 });

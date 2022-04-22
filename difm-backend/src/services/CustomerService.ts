@@ -27,23 +27,11 @@ class CustomerService extends Service<Customer> {
 
     const hash = await this.bcrypt.hashIt(obj.password);
     const response = await this.model.create({ ...obj, password: hash });
-    if (response === undefined) {
-      return {
-        status: this.status.INTERNAL,
-        response: { error: this.errors.INTERNAL },
-      };
-    }
     return { status: this.status.CREATED, response };
   };
 
-  read = async (): Promise<ResponseRead<Customer> | ResponseError> => {
+  read = async (): Promise<ResponseRead<Customer>> => {
     const response = await this.model.read();
-    if (response === undefined) {
-      return {
-        status: this.status.INTERNAL,
-        response: { error: this.errors.INTERNAL },
-      };
-    }
     return { status: this.status.OK, response };
   };
 

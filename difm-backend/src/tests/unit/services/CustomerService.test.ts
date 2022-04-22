@@ -136,23 +136,23 @@ describe('3 - Test customerServices', () => {
         expect(response).to.be.deep.equal({ status: 200, response: [payload] });
       });
     });
-    describe('b) if fail', () => {
-      before(async () => {
-        sinon
-          .stub(customer.model, 'read')
-          .resolves(undefined);
-      });
+    // describe('b) if fail', () => {
+    //   before(async () => {
+    //     sinon
+    //       .stub(customer.model, 'read')
+    //       .resolves(undefined);
+    //   });
     
-      after(()=>{
-        sinon.restore();
-      })
+    //   after(()=>{
+    //     sinon.restore();
+    //   })
     
-      it('return an object with status 500 and an error message "Internal Server Error"', async () => {
-        const response = await customer.read();
+    //   it('return an object with status 500 and an error message "Internal Server Error"', async () => {
+    //     const response = await customer.read();
 
-        expect(response).to.be.deep.equal({ status: 500, response: { error: 'Internal Server Error'} });
-      });
-    });
+    //     expect(response).to.be.deep.equal({ status: 500, response: { error: 'Internal Server Error'} });
+    //   });
+    // });
   });
 
   describe('3.3 - method readOne', () => {
