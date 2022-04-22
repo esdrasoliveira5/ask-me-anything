@@ -84,7 +84,24 @@ describe('2 - Test customerModel', () => {
     })
   
     it('return the customer in the db', async () => {
-      const response = await customer.readOne({
+      const response = await customer.readOne({ _id: '6260bca97c58e5a0b7847cfa'});
+
+      expect(response).to.be.deep.equal(payload);
+    });
+  });
+  describe('2.3 - method update', () => {
+    before(async () => {
+      sinon
+        .stub(customer.model, 'findByIdAndUpdate')
+        .resolves(payload);
+    });
+  
+    after(()=>{
+      sinon.restore();
+    })
+  
+    it('return the customer updated in the db', async () => {
+      const response = await customer.update('6260bca97c58e5a0b7847cfa', {
         name: 'Roberto',
         lastName: 'Oliveira',
         email: 'roberto@email.com',
