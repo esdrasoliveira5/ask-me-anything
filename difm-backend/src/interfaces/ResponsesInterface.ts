@@ -19,3 +19,7 @@ export interface ResponseCreate<T> extends Status {
 export interface ResponseRead<T> extends Status {
   response: T[];
 }
+
+export interface ResponseReadOne<T> extends Status {
+  response: T;
+}

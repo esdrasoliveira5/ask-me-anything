@@ -4,6 +4,7 @@ import {
   ResponseError,
   ResponseCreate,
   ResponseRead,
+  ResponseReadOne,
 } from '../interfaces/ResponsesInterface';
 import Bcrypt from '../validations/Bcrypt';
 import JwToken from '../validations/JwtToken';
@@ -25,6 +26,8 @@ abstract class Service<T> {
   abstract create(obj: T): Promise<ResponseCreate<T> | ResponseError>;
 
   abstract read(): Promise<ResponseRead<T> | ResponseError>;
+
+  abstract readOne(obj: T): Promise<ResponseReadOne<T> | ResponseError>;
 }
 
 export default Service;

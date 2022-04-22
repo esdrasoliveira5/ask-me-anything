@@ -4,6 +4,7 @@ import {
   ResponseCreate,
   ResponseError,
   ResponseRead,
+  ResponseReadOne,
 } from '../interfaces/ResponsesInterface';
 import CustomerModel from '../models/CustomerModel';
 
@@ -41,6 +42,18 @@ class CustomerService extends Service<Customer> {
       return {
         status: this.status.INTERNAL,
         response: { error: this.errors.INTERNAL },
+      };
+    }
+    return { status: this.status.OK, response };
+  };
+
+  readOne = async (obj: Customer):
+  Promise<ResponseError | ResponseReadOne<Customer>> => {
+    const response = await this.model.readOne(obj);
+    if (response === null) {
+      return {
+        status: this.status.NOT_FOUND,
+        response: { error: this.errors.NOT_FOUND },
       };
     }
     return { status: this.status.OK, response };
