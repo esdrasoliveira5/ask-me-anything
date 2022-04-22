@@ -3,7 +3,6 @@ import chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import { Response } from 'superagent';
-import { Customer } from '../../types/CustomerType';
 import CustomerModel from '../../models/CustomerModel';
 import server from '../../server';
 const customer = new CustomerModel();
@@ -15,7 +14,8 @@ const { expect } = chai;
 describe('1 - Test endpoint POST /customer', () => {
   describe('1.1 - if success', () => {
     let chaiHttpResponse: Response;
-    const customerPayload: Customer = {
+    const customerPayload = {
+      _id: '6260bca97c58e5a0b7847cfa',
       name: 'Roberto',
       lastName: 'Oliveira',
       email: 'roberto@email.com',
@@ -66,6 +66,7 @@ describe('1 - Test endpoint POST /customer', () => {
       });
       expect(chaiHttpResponse).to.have.status(201);
       expect(chaiHttpResponse.body).to.deep.equal({
+        "_id": "6260bca97c58e5a0b7847cfa",
         "name": "Roberto",
         "lastName": "Oliveira",
         "email": "roberto@email.com",
@@ -151,8 +152,9 @@ describe('1 - Test endpoint POST /customer', () => {
 describe('2 - Test endpoint GET /customer', () => {
   describe('2.1 - if success', () => {
     let chaiHttpResponse: Response;
-    const customerPayload: Customer[] = [
+    const customerPayload = [
       {
+        _id: '6260bca97c58e5a0b7847cfa',
         name: 'Roberto',
         lastName: 'Oliveira',
         email: 'roberto@email.com',
@@ -187,6 +189,7 @@ describe('2 - Test endpoint GET /customer', () => {
       expect(chaiHttpResponse).to.have.status(200);
       expect(chaiHttpResponse.body).to.deep.equal([
         {
+          "_id": "6260bca97c58e5a0b7847cfa",
           "name": "Roberto",
           "lastName": "Oliveira",
           "email": "roberto@email.com",
@@ -221,6 +224,89 @@ describe('2 - Test endpoint GET /customer', () => {
       chaiHttpResponse = await chai
          .request(server.app)
          .get('/customer')
+         .set('X-API-Key', 'foobar')
+
+      expect(chaiHttpResponse).to.have.status(500);
+      expect(chaiHttpResponse.body).to.deep.equal({ "error": "Internal Server Error"});
+    });
+  });
+});
+
+describe('3 - Test endpoint GET /customer/:id', () => {
+  describe('3.1 - if success', () => {
+    let chaiHttpResponse: Response;
+    const customerPayload = [
+      {
+        _id: '6260bca97c58e5a0b7847cfa',
+        name: 'Roberto',
+        lastName: 'Oliveira',
+        email: 'roberto@email.com',
+        contact: '11987654321',
+        password: '123456789',
+        type: 'customer',
+        hires: [],
+        address: {
+          street: 'avenida',
+          number: '100A',
+          district: 'Bairro',
+          zipcode: '45687-899',
+          city: 'cidade',
+          state: 'estado'
+        }
+      }
+    ]
+    before(() => {
+      sinon
+      .stub(customer.model, 'findOne')
+      .resolves(customerPayload);
+    });
+    after(()=>{
+      sinon.restore();
+    });
+    it('a) return status 200 and the customer', async () => {
+      chaiHttpResponse = await chai
+         .request(server.app)
+         .get('/customer/6260bca97c58e5a0b7847cfa')
+         .set('X-API-Key', 'foobar')
+
+      expect(chaiHttpResponse).to.have.status(200);
+      expect(chaiHttpResponse.body).to.deep.equal([
+        {
+          "_id": "6260bca97c58e5a0b7847cfa",
+          "name": "Roberto",
+          "lastName": "Oliveira",
+          "email": "roberto@email.com",
+          "contact": "11987654321",
+          "password": "123456789",
+          "type": "customer",
+          "hires": [],
+          "address": {
+              "street": "avenida",
+              "number": "100A",
+              "district": "Bairro",
+              "zipcode": "45687-899",
+              "city": "cidade",
+              "state": "estado"
+          }
+        }
+      ]);
+    });
+  });
+  describe('3.2 - if fail', () => {
+    let chaiHttpResponse: Response;
+    before(() => {
+      sinon
+      .stub(customer.model, 'findOne')
+      .resolves(null);
+    });
+    after(()=>{
+      sinon.restore();
+    });
+
+    it('a) return status 500 and the error message "Internal Server Error"', async () => {
+      chaiHttpResponse = await chai
+         .request(server.app)
+         .get('/customer/6260bca97c58e5a0b7847cfa')
          .set('X-API-Key', 'foobar')
 
       expect(chaiHttpResponse).to.have.status(500);

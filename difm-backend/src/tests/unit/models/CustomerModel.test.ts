@@ -5,6 +5,7 @@ import CustomerModel from '../../../models/CustomerModel';
 const customer = new CustomerModel();
 const { expect } = chai;
 const payload = {
+  _id: '6260bca97c58e5a0b7847cfa',
   name: 'Roberto',
   lastName: 'Oliveira',
   email: 'roberto@email.com',

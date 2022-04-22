@@ -8,6 +8,7 @@ const customer = new CustomerService();
 const { expect } = chai;
 
 const payload = {
+  _id: '6260bca97c58e5a0b7847cfa',
   name: 'Roberto',
   lastName: 'Oliveira',
   email: 'roberto@email.com',
@@ -28,23 +29,6 @@ const payload = {
 describe('3 - Test customerServices', () => {
   describe('3.1 - method create', () => {
     describe('a) if success', () => {
-      const payload = {
-        name: 'Roberto',
-        lastName: 'Oliveira',
-        email: 'roberto@email.com',
-        contact: '11987654321',
-        password: '$2b$10$JOmGDGptDGC1.eLa3OMj0uAk4FxZT2SjLH0lbP3Uh9W7iDHGN3Lp6',
-        type: 'customer',
-        hires: [],
-        address: {
-          street: 'avenida',
-          number: '100A',
-          district: 'Bairro',
-          zipcode: '45687-899',
-          city: 'cidade',
-          state: 'estado'
-        }
-      };
       before(async () => {
         sinon
         .stub(customer.model, 'readOne')
@@ -135,30 +119,10 @@ describe('3 - Test customerServices', () => {
   });
   describe('3.2 - method read', () => {
     describe('a) if success', () => {
-      const payload = [
-        {
-          name: 'Roberto',
-          lastName: 'Oliveira',
-          email: 'roberto@email.com',
-          contact: '11987654321',
-          password: '$2b$10$JOmGDGptDGC1.eLa3OMj0uAk4FxZT2SjLH0lbP3Uh9W7iDHGN3Lp6',
-          type: 'customer',
-          hires: [],
-          address: {
-            street: 'avenida',
-            number: '100A',
-            district: 'Bairro',
-            zipcode: '45687-899',
-            city: 'cidade',
-            state: 'estado'
-          }
-        }
-      ];
-
       before(async () => {
         sinon
           .stub(customer.model, 'read')
-          .resolves(payload);
+          .resolves([payload]);
       });
     
       after(()=>{
@@ -168,7 +132,7 @@ describe('3 - Test customerServices', () => {
       it('return a array with status 200 and the customers in the db', async () => {
         const response = await customer.read();
 
-        expect(response).to.be.deep.equal({ status: 200, response: payload });
+        expect(response).to.be.deep.equal({ status: 200, response: [payload] });
       });
     });
     describe('b) if fail', () => {
